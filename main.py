@@ -41,6 +41,8 @@ def main():
                 print("Invalid task number.")
         
         elif choice == "4":
+            if number_of_tasks == 0:
+                number_of_tasks = 1  # Avoid division by zero
             completion_percentage = (number_of_completed_tasks / number_of_tasks) * 100
             print(f"Completion Percentage: {completion_percentage:.2f}%")
 
