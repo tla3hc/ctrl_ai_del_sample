@@ -1,3 +1,5 @@
+# storage.py
+import os
 from task import Task
 
 class Storage:
@@ -10,7 +12,15 @@ class Storage:
 
     def get_tasks(self):
         tasks = []
-        with open(self.filepath, "r") as f:
-            for line in f:
-                tasks.append(Task.from_string(line))
+        # 1. Ensure file exists—create it if not
+        if not os.path.exists(self.filepath):
+            open(self.filepath, "w").close()
+        # 2. Read tasks with error handling
+        try:
+            with open(self.filepath, "r") as f:
+                for line in f:
+                    if line.strip():
+                        tasks.append(Task.from_string(line))
+        except (OSError, ValueError) as e:
+            print(f"Error reading tasks: {e}")
         return tasks
