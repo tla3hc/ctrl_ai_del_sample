@@ -24,3 +24,10 @@ class Storage:
         except (OSError, ValueError) as e:
             print(f"Error reading tasks: {e}")
         return tasks
+    
+    def remove_task(self, task_to_remove):
+        tasks = self.get_tasks()
+        tasks = [task for task in tasks if task != task_to_remove]
+        with open(self.filepath, "w") as f:
+            for task in tasks:
+                f.write(task.to_string() + "\n")
